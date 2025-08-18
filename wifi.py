@@ -5,7 +5,7 @@ import csv
 import random
 
 iface = "wlp2s0"  # replace with your Wi-Fi interface
-csv_file = "wifi_signal.csv"
+csv_file = "wifi_signal_m.csv"
 
 # Write header to CSV file if it doesn't exist
 try:
@@ -17,7 +17,7 @@ except FileNotFoundError:
         writer.writerow(["timestamp", "rssi", "label"])
 
 start_time = time.time()
-while time.time() - start_time < 240:  # Run for 60 seconds (1 minute)
+while time.time() - start_time < 600:  
     try:
         result = subprocess.check_output(["sudo", "iwlist", iface, "scan"]).decode()
         match = re.search(r"Signal level=(-\d+)", result)
@@ -27,7 +27,7 @@ while time.time() - start_time < 240:  # Run for 60 seconds (1 minute)
 
             # Simulate motion detection (replace with your actual logic)
               # 20% chance of motion
-            label = "no_motion"
+            label = "motion"
             
             # Append timestamp, RSSI, and label to CSV file
             timestamp = int(time.time())  # Unix timestamp
